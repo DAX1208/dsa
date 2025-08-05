@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for the linked list
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = nullptr;
+    }
+};
+
+// Stack class using linked list
+class Stack {
+private:
+    Node* top;
+
+public:
+    Stack() {
+        top = nullptr;
+    }
+
+    // Push operation
+    void push(int x) {
+        Node* newNode = new Node(x);
+        newNode->next = top;
+        top = newNode;
+    }
+
+    // Pop operation
+    int pop() {
+        if (top == nullptr)
+            return -1;
+
+        int val = top->data;
+        Node* temp = top;
+        top = top->next;
+        delete temp;
+        return val;
+    }
+
+    // Peek operation
+    int peek() {
+        if (top == nullptr)
+            return -1;
+        return top->data;
+    }
+
+    // isEmpty operation
+    int isEmpty() {
+        return (top == nullptr) ? 1 : 0;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    Stack s;
+    while (n--) {
+        int op;
+        cin >> op;
+
+        switch (op) {
+            case 1: {
+                int x;
+                cin >> x;
+                s.push(x);
+                break;
+            }
+            case 2:
+                cout << s.pop() << endl;
+                break;
+
+            case 3:
+                cout << s.peek() << endl;
+                break;
+
+            case 4:
+                cout << s.isEmpty() << endl;
+                break;
+
+            default:
+                cout << "Invalid operation\n";
+        }
+    }
+
+    return 0;
+}
