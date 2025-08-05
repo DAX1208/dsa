@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class Stack {
+private:
+    static const int MAX = 1000; // max size of stack
+    int arr[MAX];
+    int top;
+
+public:
+    Stack() {
+        top = -1;
+    }
+
+    // Push operation
+    void push(int x) {
+        if (top >= MAX - 1) {
+            cout << "Stack Overflow\n";
+            return;
+        }
+        arr[++top] = x;
+    }
+
+    // Pop operation
+    int pop() {
+        if (top == -1)
+            return -1;
+        return arr[top--];
+    }
+
+    // Peek operation
+    int peek() {
+        if (top == -1)
+            return -1;
+        return arr[top];
+    }
+
+    // isEmpty operation
+    int isEmpty() {
+        return (top == -1) ? 1 : 0;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    Stack s;
+    while (n--) {
+        int op;
+        cin >> op;
+
+        switch (op) {
+            case 1: { // push
+                int x;
+                cin >> x;
+                s.push(x);
+                break;
+            }
+            case 2: // pop
+                cout << s.pop() << endl;
+                break;
+
+            case 3: // peek
+                cout << s.peek() << endl;
+                break;
+
+            case 4: // isEmpty
+                cout << s.isEmpty() << endl;
+                break;
+
+            default:
+                cout << "Invalid operation\n";
+        }
+    }
+
+    return 0;
+}
