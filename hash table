@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class StudentHashTable {
+private:
+    int M;
+    vector<int> table;
+    const int EMPTY = -1;
+
+    int h1(int x) {
+        return x % M;
+    }
+
+    int h2(int x) {
+        return 7 - (x % 7);
+    }
+
+public:
+    // Constructor
+    StudentHashTable(int size) {
+        M = size;
+        table.assign(M, EMPTY);
+    }
+
+    // Insert student ID using double hashing
+    void insert(int x) {
+        int index1 = h1(x);
+        int index2 = h2(x);
+
+        for (int i = 0; i < M; ++i) {
+            int index = (index1 + i * index2) % M;
+            if (table[index] == EMPTY) {
+                table[index] = x;
+                return;
+            }
+        }
+        // If table is full, do nothing (as per constraints)
+    }
+
+    // Display the hash table
+    void display() {
+        for (int i = 0; i < M; ++i) {
+            cout << i << " ->";
+            if (table[i] != EMPTY) {
+                cout << " " << table[i];
+            }
+            cout << endl;
+        }
+    }
+};
+
+// ------------------- Main Function -------------------
+
+int main() {
+    int M;
+    cin >> M;
+
+    StudentHashTable hashTable(M);
+
+    int op;
+    while (cin >> op) {
+        if (op == 1) {
+            int x;
+            cin >> x;
+            hashTable.insert(x);
+        } else if (op == 2) {
+            hashTable.display();
+        }
+    }
+
+    return 0;
+}
