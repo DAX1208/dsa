@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Queue {
+    int *arr;
+    int cap;
+    int front, rear, currSize;
+
+public:
+    Queue(int n) {
+        cap = n;
+        arr = new int[cap];
+        front = 0;
+        rear = -1;
+        currSize = 0;
+    }
+
+    void enqueue(int x) {
+        if (currSize == cap) {
+            // Queue full, but per constraints we won't handle overflow
+            return;
+        }
+        rear = (rear + 1) % cap;
+        arr[rear] = x;
+        currSize++;
+    }
+
+    int dequeue() {
+        if (isEmpty()) return -1;
+        int val = arr[front];
+        front = (front + 1) % cap;
+        currSize--;
+        return val;
+    }
+
+    int peek() {
+        if (isEmpty()) return -1;
+        return arr[front];
+    }
+
+    int isEmpty() {
+        return (currSize == 0) ? 1 : 0;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    Queue q(n);  // max n operations, so capacity n is enough
+
+    for (int i = 0; i < n; i++) {
+        int type;
+        cin >> type;
+
+        if (type == 1) {
+            int x;
+            cin >> x;
+            q.enqueue(x);
+        } 
+        else if (type == 2) {
+            cout << q.dequeue() << endl;
+        } 
+        else if (type == 3) {
+            cout << q.peek() << endl;
+        } 
+        else if (type == 4) {
+            cout << q.isEmpty() << endl;
+        }
+    }
+
+    return 0;
+}
