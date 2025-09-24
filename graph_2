@@ -1,0 +1,48 @@
+#include <iostream>
+#include <queue>
+#include <sstream>
+#include <string>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    cin.ignore();  // clear newline after integer input
+
+    // adjacency list using plain arrays
+    int adj[1000][1000];   // store neighbors
+    int adjSize[1000] = {0}; // track how many neighbors each node has
+    bool visited[1000] = {false};
+
+    // read adjacency list line by line
+    for (int i = 0; i < n; i++) {
+        string line;
+        getline(cin, line);
+        stringstream ss(line);
+        int neighbor;
+        while (ss >> neighbor) {
+            adj[i][adjSize[i]++] = neighbor;
+        }
+    }
+
+    queue<int> q;
+    q.push(0);
+    visited[0] = true;
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";
+
+        // traverse neighbors in ascending order
+        for (int j = 0; j < adjSize[node]; j++) {
+            int neigh = adj[node][j];
+            if (!visited[neigh]) {
+                visited[neigh] = true;
+                q.push(neigh);
+            }
+        }
+    }
+
+    return 0;
+}
